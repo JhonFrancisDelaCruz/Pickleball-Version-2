@@ -1,198 +1,120 @@
 package gui;
 
-import javax.swing.JOptionPane;
-public class LoginPage extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginPage.class.getName());
-    
-    private final String username = "DelaCruz&Roque";
-    private final String password = "123456789";
-    
+import java.awt.*;
+import java.security.GeneralSecurityException;
+import java.sql.SQLException;
+import java.util.Arrays;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import service.SqlStore;
+
+public class LoginPage extends JFrame {
+    private final SqlStore store = new SqlStore();
+    private final JTextField username = new JTextField();
+    private final JPasswordField password = new JPasswordField();
+
     public LoginPage() {
-    setUndecorated(true);
-    initComponents();
-    setLocationRelativeTo(null);
+        setTitle("Pickleball Queue - Login");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(true);
+        setMinimumSize(new Dimension(360, 340));
 
-    btnSignin.addActionListener(e -> validLogin());
-}
+        Theme.BackgroundPanel background = new Theme.BackgroundPanel(new GridBagLayout());
+        background.setBorder(new EmptyBorder(20, 16, 20, 16));
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+        JLabel title = heading(
+            "<html><div style='text-align:center'>Pickleball Open Play<br>Queue Management</div></html>",
+            Font.BOLD, 16);
+        JLabel subtitle = heading("Sign in to continue", Font.PLAIN, 12);
 
-        mainPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        Username = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
-        btnSignin = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        Exit = new javax.swing.JButton();
+        Theme.RoundedPanel card = new Theme.RoundedPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBorder(new EmptyBorder(16, 16, 16, 16));
+        card.add(Theme.authField("Username", username));
+        card.add(Theme.authField("Password", password));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        JButton signIn = new JButton("Sign In");
+        Theme.stylePrimaryButton(signIn);
+        signIn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
+        signIn.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JButton signUp = new JButton("Create an account");
+        signUp.setFont(Theme.FONT_SMALL);
+        signUp.setForeground(new Color(0, 100, 180));
+        signUp.setBorderPainted(false);
+        signUp.setContentAreaFilled(false);
+        signUp.setFocusPainted(false);
+        signUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        signUp.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(Theme.authAction(signIn));
+        card.add(Box.createVerticalStrut(8));
+        card.add(Theme.authLink(signUp));
 
-        mainPanel.setBackground(new java.awt.Color(204, 255, 204));
+        JPanel content = content(title, subtitle, card);
+        addContent(background, content);
+        setContentPane(background);
+        setSize(400, 360);
+        setLocationRelativeTo(null);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("<html>\n<div style=\"text-align: center;\">\n    Pickleball Open Play<br>\n    Queue Management System\n</div>\n</html>");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel2.setText("Sign in to continue");
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-
-        Username.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
-        Username.addActionListener(this::UsernameActionPerformed);
-
-        txtPassword.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
-        txtPassword.addActionListener(this::txtPasswordActionPerformed);
-
-        btnSignin.setBackground(new java.awt.Color(0, 204, 0));
-        btnSignin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSignin.setText("SIGN IN");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("USERNAME");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("PASSWORD");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Username)
-                    .addComponent(txtPassword)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSignin, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Username, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(btnSignin, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
-
-        Exit.setBackground(new java.awt.Color(204, 51, 0));
-        Exit.setForeground(new java.awt.Color(255, 255, 255));
-        Exit.setText("Exit");
-        Exit.addActionListener(this::ExitActionPerformed);
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 195, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(261, 261, 261))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(Exit)
-                        .addContainerGap())))
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-       
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameActionPerformed
-     
-    }//GEN-LAST:event_UsernameActionPerformed
-
-    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-       System.exit(0);
-    }//GEN-LAST:event_ExitActionPerformed
-       
-    public static void main(String args[]) {
+        username.addActionListener(event -> password.requestFocusInWindow());
+        password.addActionListener(event -> signIn());
+        signIn.addActionListener(event -> signIn());
+        signUp.addActionListener(event -> {
+            Theme.showLike(this, new SignUpPage());
+        });
     }
-    
-    public void validLogin() {
-    String enteredUsername = Username.getText().trim();
-    String enteredPassword = new String(txtPassword.getPassword());
 
-        if (!enteredUsername.equals(username)) {
-            JOptionPane.showMessageDialog(this, "Invalid username!");
-            return;}
+    static JLabel heading(String text, int style, int size) {
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(new Font("Segoe UI", style, size));
+        label.setForeground(Color.WHITE);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return label;
+    }
 
-        if (!enteredPassword.equals(password)) {
-            JOptionPane.showMessageDialog(this, "Invalid password!");
-            return;}
-        
-        JOptionPane.showMessageDialog(this, "Login successful!");
+    static JPanel content(JLabel title, JLabel subtitle, JComponent card) {
+        JPanel content = new JPanel();
+        content.setOpaque(false);
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setMaximumSize(new Dimension(560, Integer.MAX_VALUE));
+        card.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.setMaximumSize(new Dimension(500, Integer.MAX_VALUE));
+        content.add(title);
+        content.add(Box.createVerticalStrut(4));
+        content.add(subtitle);
+        content.add(Box.createVerticalStrut(14));
+        content.add(card);
+        return content;
+    }
 
-        new MainDashboard().setVisible(true);
-    this.dispose();
-}
-    
-   
+    static void addContent(JPanel background, JPanel content) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        background.add(content, constraints);
+    }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Exit;
-    private javax.swing.JTextField Username;
-    private javax.swing.JButton btnSignin;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JPasswordField txtPassword;
-    // End of variables declaration//GEN-END:variables
+    private void signIn() {
+        char[] enteredPassword = password.getPassword();
+        try {
+            int userId = store.authenticate(username.getText().trim(), enteredPassword);
+            if (userId < 0) {
+                JOptionPane.showMessageDialog(this, "Invalid username or password.",
+                    "Login Failed", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            new MainDashboard(userId).setVisible(true);
+            dispose();
+        } catch (SQLException | GeneralSecurityException exception) {
+            JOptionPane.showMessageDialog(this,
+                "Could not connect to or read the database:\n" + exception.getMessage(),
+                "Database Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            Arrays.fill(enteredPassword, '\0');
+        }
+    }
+
+    public static void main(String[] args) {
+        main.Main.main(args);
+    }
 }

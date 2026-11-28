@@ -1,224 +1,203 @@
 package gui;
 
+import java.awt.*;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.border.*;
 import model.Player;
 
-public class Court extends javax.swing.JPanel {
+public class Court extends JPanel {
     private Runnable onCompleteGame;
+    private JLabel courtTitle;
+    private JLabel lblTeamA, lblTeamB;
+    private JButton completeGame;
+    private JPanel headerPanel, contentPanel;
+    private JPanel teamAPlayersPanel, teamBPlayersPanel;
+    private JPanel teamASection, teamBSection;
+    private List<Player> currentTeamA = List.of();
+    private List<Player> currentTeamB = List.of();
 
     public Court() {
         initComponents();
+        applyTheme();
         clearPlayers();
     }
-    public void setCourtNumber(int number) {courtTitle.setText("COURT " + number);}
-    public void setOnCompleteGame(Runnable onCompleteGame) {this.onCompleteGame = onCompleteGame;}
+
+    public void applyTheme() {
+        setBackground(Theme.CARD);
+        setBorder(new LineBorder(Theme.BORDER, 1));
+
+        headerPanel.setBackground(Theme.HEADER);
+        courtTitle.setForeground(Color.WHITE);
+        courtTitle.setFont(Theme.FONT_HEADING);
+
+        contentPanel.setBackground(Theme.CARD);
+
+        lblTeamA.setForeground(Theme.ACCENT);
+        lblTeamB.setForeground(Theme.ACCENT);
+        lblTeamA.setFont(Theme.FONT_SMALL);
+        lblTeamB.setFont(Theme.FONT_SMALL);
+
+        stylePlayerRows(teamAPlayersPanel);
+        stylePlayerRows(teamBPlayersPanel);
+
+        Theme.stylePrimaryButton(completeGame);
+        completeGame.setText("Complete");
+    }
+
+    public void setCourtNumber(int number) {
+        courtTitle.setText("Court " + number);
+    }
+
+    public void setOnCompleteGame(Runnable onCompleteGame) {
+        this.onCompleteGame = onCompleteGame;
+    }
 
     public void clearPlayers() {
-        Player1.setText(" ");
-        Player2.setText(" ");
-        Player3.setText(" ");
-        Player4.setText(" ");
+        setPlayers(List.of(), List.of());
     }
-    
+
     public void setPlayers(List<Player> players) {
-    clearPlayers();
-    if (players.size() > 0) {Player1.setText(players.get(0).getId() + " - " + players.get(0).getName());}
-    if (players.size() > 1) {Player2.setText(players.get(1).getId() + " - " + players.get(1).getName());}
-    if (players.size() > 2) {Player3.setText(players.get(2).getId() + " - " + players.get(2).getName());}
-    if (players.size() > 3) {Player4.setText(players.get(3).getId() + " - " + players.get(3).getName());}
-}
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+        int teamSize = players.size() / 2;
+        setPlayers(players.subList(0, teamSize), players.subList(teamSize, players.size()));
+    }
 
-        completeGame = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        courtTitle = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        Player1 = new javax.swing.JLabel();
-        sdf = new javax.swing.JPanel();
-        Player2 = new javax.swing.JLabel();
-        fg = new javax.swing.JPanel();
-        Player3 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        Player4 = new javax.swing.JLabel();
+    public void setPlayers(List<Player> teamA, List<Player> teamB) {
+        currentTeamA = new java.util.ArrayList<>(teamA);
+        currentTeamB = new java.util.ArrayList<>(teamB);
+        lblTeamA.setText("Team A (" + currentTeamA.size() + ")");
+        lblTeamB.setText("Team B (" + currentTeamB.size() + ")");
+        renderPlayers(teamAPlayersPanel, currentTeamA);
+        renderPlayers(teamBPlayersPanel, currentTeamB);
+        int rows = Math.max(teamA.size(), teamB.size());
+        int height = Math.max(200, 142 + rows * 48);
+        setPreferredSize(new Dimension(200, height));
+        revalidate();
+    }
 
-        setBackground(new java.awt.Color(0, 0, 0));
-
-        completeGame.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        completeGame.setText("Complete Game");
-        completeGame.addActionListener(this::completeGameActionPerformed);
-
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        courtTitle.setBackground(new java.awt.Color(255, 255, 255));
-        courtTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        courtTitle.setForeground(new java.awt.Color(255, 255, 255));
-        courtTitle.setText("COURT");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(courtTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(courtTitle))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        Player1.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        Player1.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        sdf.setBackground(new java.awt.Color(51, 51, 51));
-        sdf.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        sdf.setPreferredSize(new java.awt.Dimension(243, 32));
-
-        Player2.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        Player2.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout sdfLayout = new javax.swing.GroupLayout(sdf);
-        sdf.setLayout(sdfLayout);
-        sdfLayout.setHorizontalGroup(
-            sdfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sdfLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        sdfLayout.setVerticalGroup(
-            sdfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sdfLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player2, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        fg.setBackground(new java.awt.Color(51, 51, 51));
-        fg.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        fg.setPreferredSize(new java.awt.Dimension(243, 32));
-
-        Player3.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        Player3.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout fgLayout = new javax.swing.GroupLayout(fg);
-        fg.setLayout(fgLayout);
-        fgLayout.setHorizontalGroup(
-            fgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fgLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        fgLayout.setVerticalGroup(
-            fgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fgLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player3, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel5.setPreferredSize(new java.awt.Dimension(4, 32));
-
-        Player4.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        Player4.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Player4, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(completeGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sdf, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(fg, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sdf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(completeGame, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void completeGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeGameActionPerformed
-        if (onCompleteGame != null) {
-            onCompleteGame.run();
+    private void renderPlayers(JPanel panel, List<Player> players) {
+        panel.removeAll();
+        if (players.isEmpty()) {
+            JLabel empty = new JLabel("—");
+            empty.setForeground(Theme.TEXT_SEC);
+            panel.add(empty);
+        } else {
+            int rowWidth = Math.max(80, (contentPanel.getWidth() - 40) / 2);
+            for (Player player : players) {
+                JLabel row = new JLabel(wrapPlayerText(player, rowWidth));
+                row.setForeground(Theme.TEXT);
+                row.setBackground(Theme.INPUT);
+                row.setBorder(new CompoundBorder(
+                    new LineBorder(Theme.BORDER, 1),
+                    new EmptyBorder(4, 6, 4, 6)));
+                row.setOpaque(true);
+                row.setFont(Theme.FONT_BODY);
+                panel.add(row);
+            }
         }
-    }//GEN-LAST:event_completeGameActionPerformed
+        panel.revalidate();
+        panel.repaint();
+    }
 
+    private String wrapPlayerText(Player player, int width) {
+        String text = player.getId() + " - " + player.getName();
+        FontMetrics metrics = getFontMetrics(Theme.FONT_BODY);
+        StringBuilder html = new StringBuilder("<html>");
+        while (!text.isEmpty()) {
+            int end = text.length();
+            while (end > 1 && metrics.stringWidth(text.substring(0, end)) > width) {
+                end--;
+            }
+            if (end < text.length()) {
+                int space = text.lastIndexOf(' ', end);
+                if (space > 0) {
+                    end = space;
+                }
+            }
+            String line = text.substring(0, end).trim();
+            if (line.isEmpty()) {
+                line = text.substring(0, 1);
+                end = 1;
+            }
+            if (html.length() > 6) {
+                html.append("<br>");
+            }
+            html.append(escapeHtml(line));
+            text = text.substring(end).trim();
+        }
+        return html.append("</html>").toString();
+    }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Player1;
-    private javax.swing.JLabel Player2;
-    private javax.swing.JLabel Player3;
-    private javax.swing.JLabel Player4;
-    private javax.swing.JButton completeGame;
-    private javax.swing.JLabel courtTitle;
-    private javax.swing.JPanel fg;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel sdf;
-    // End of variables declaration//GEN-END:variables
+    private static String escapeHtml(String text) {
+        return text.replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace("\"", "&quot;");
+    }
+
+    private void stylePlayerRows(JPanel panel) {
+        panel.setBackground(Theme.CARD);
+        for (Component component : panel.getComponents()) {
+            if (component instanceof JLabel) {
+                JLabel label = (JLabel) component;
+                label.setForeground(label.getText().equals("—") ? Theme.TEXT_SEC : Theme.TEXT);
+                label.setBackground(Theme.INPUT);
+                label.setBorder(new CompoundBorder(
+                    new LineBorder(Theme.BORDER, 1),
+                    new EmptyBorder(4, 6, 4, 6)));
+                label.setOpaque(true);
+                label.setFont(Theme.FONT_BODY);
+            }
+        }
+    }
+
+    private void initComponents() {
+        completeGame = new JButton("Complete");
+        headerPanel = new JPanel();
+        courtTitle = new JLabel("Court");
+        contentPanel = new JPanel();
+        lblTeamA = new JLabel("Team A");
+        lblTeamB = new JLabel("Team B");
+        teamAPlayersPanel = new JPanel();
+        teamBPlayersPanel = new JPanel();
+
+        setLayout(new BorderLayout());
+
+        headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 8, 5));
+        headerPanel.add(courtTitle);
+        add(headerPanel, BorderLayout.NORTH);
+
+        contentPanel.setLayout(new GridLayout(1, 2, 8, 0));
+        contentPanel.setBorder(new EmptyBorder(6, 8, 4, 8));
+        teamAPlayersPanel.setLayout(new GridLayout(0, 1, 0, 3));
+        teamBPlayersPanel.setLayout(new GridLayout(0, 1, 0, 3));
+        teamAPlayersPanel.setOpaque(false);
+        teamBPlayersPanel.setOpaque(false);
+        teamASection = createTeamSection(lblTeamA, teamAPlayersPanel);
+        teamBSection = createTeamSection(lblTeamB, teamBPlayersPanel);
+        contentPanel.add(teamASection);
+        contentPanel.add(teamBSection);
+        contentPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent event) {
+                renderPlayers(teamAPlayersPanel, currentTeamA);
+                renderPlayers(teamBPlayersPanel, currentTeamB);
+            }
+        });
+        add(contentPanel, BorderLayout.CENTER);
+
+        completeGame.addActionListener(e -> {
+            if (onCompleteGame != null) onCompleteGame.run();
+        });
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 4));
+        btnPanel.setOpaque(false);
+        btnPanel.add(completeGame);
+        add(btnPanel, BorderLayout.SOUTH);
+    }
+
+    private JPanel createTeamSection(JLabel title, JPanel players) {
+        JPanel section = new JPanel(new BorderLayout(0, 3));
+        section.setOpaque(false);
+        section.add(title, BorderLayout.NORTH);
+        section.add(players, BorderLayout.CENTER);
+        return section;
+    }
 }

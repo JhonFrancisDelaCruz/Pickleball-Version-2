@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball_completed/Pickleball/src/main/Main.java</file>
-            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball_completed/Pickleball/src/gui/ContinuingPlayer.java</file>
-            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball_completed/Pickleball/src/gui/LoginPage.java</file>
-            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball_completed/Pickleball/src/gui/MainDashboard.java</file>
-            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball_completed/Pickleball/src/gui/Court.java</file>
-            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball_completed/Pickleball/src/service/QueueManager.java</file>
+            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball%20version2/src/model/Player.java</file>
+            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball%20version2/src/service/QueueManager.java</file>
+            <file>file:/C:/Francis%20Files/PROJECTS/Netbeans%20Projects/Pickleball%20version2/src/service/SqlStore.java</file>
         </group>
     </open-files>
 </project-private>
